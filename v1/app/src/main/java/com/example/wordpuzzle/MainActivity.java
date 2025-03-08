@@ -57,10 +57,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void initializeWords() {
         words = new ArrayList<>();
-        words.add(new Word("example", "HUZUR"));
-        words.add(new Word("house", "ZUHUR"));
-        words.add(new Word("book", "RUH"));
-        words.add(new Word("friend", "RUBUZ"));
+        words.add(new Word("example", "ALIŞTIRMA"));
+        words.add(new Word("book", "KİTAP"));
+        words.add(new Word("friend", "ARKADAŞ"));
     }
 
     private void initializeViews() {
@@ -107,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
         for (Word word : words) {
             TextView wordView = new TextView(this);
             wordView.setText(word.english);
-            wordView.setTextSize(16); // Punto biraz daha küçültüldü
+            wordView.setTextSize(16); 
             wordView.setPadding(8, 4, 8, 4);
             if (word.isSolved) {
                 wordView.setPaintFlags(wordView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
@@ -129,19 +128,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupLetters() {
-        // Her harfin maksimum tekrar sayısını bul
         Map<String, Integer> maxLetterCount = new HashMap<>();
         
-        // Tüm kelimeleri kontrol et
         for (Word word : words) {
-            // Her kelime için harf frekansını hesapla
             Map<String, Integer> currentWordCount = new HashMap<>();
             for (char c : word.turkish.toCharArray()) {
                 String letter = String.valueOf(c);
                 currentWordCount.put(letter, currentWordCount.getOrDefault(letter, 0) + 1);
             }
             
-            // Her harfin maksimum tekrar sayısını güncelle
             for (Map.Entry<String, Integer> entry : currentWordCount.entrySet()) {
                 String letter = entry.getKey();
                 int count = entry.getValue();
@@ -149,7 +144,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         
-        // Harfleri gerektiği kadar listeye ekle
         List<String> letters = new ArrayList<>();
         for (Map.Entry<String, Integer> entry : maxLetterCount.entrySet()) {
             String letter = entry.getKey();
@@ -159,7 +153,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         
-        // Harfleri karıştır
         Collections.shuffle(letters);
         
         hexagonGridView.setLetters(letters);
@@ -168,7 +161,6 @@ public class MainActivity extends AppCompatActivity {
     private void checkWord(String guess) {
         boolean found = false;
         for (Word word : words) {
-            // Büyük harfe çevirip kontrol et
             String turkishWord = word.turkish.toUpperCase(new Locale("tr", "TR"));
             if (!word.isSolved && guess.equals(turkishWord)) {
                 word.isSolved = true;
