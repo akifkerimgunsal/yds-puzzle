@@ -81,34 +81,26 @@ public class HexagonGridView extends View {
         int viewWidth = getWidth();
         int viewHeight = getHeight();
         
-        // Altıgen boyutunu hesapla
         float availableSize = Math.min(viewWidth, viewHeight) * 0.8f;
         int totalHexagons = letters.size();
         
-        // Altıgen boyutunu harf sayısına göre ayarla
-        // Daha fazla harf varsa altıgenler küçülsün
         hexagonSize = availableSize / (totalHexagons * 0.8f);
         spacing = hexagonSize * 0.1f;
         
         float centerX = viewWidth / 2f;
         float centerY = viewHeight / 2f;
-        float radius = hexagonSize * 3f; // Daire yarıçapını harf sayısına göre ayarla
+        float radius = hexagonSize * 3f;
         
-        // Başlangıç açısını ayarla (üstten başla)
         double startAngle = -Math.PI / 2;
-        // Her bir altıgen arasındaki açı
         double angleStep = 2 * Math.PI / totalHexagons;
         
-        // Harfleri yerleştir
         for (int i = 0; i < totalHexagons; i++) {
-            // Üstten başlayarak saat yönünde yerleştir
             double angle = startAngle + angleStep * i;
             float x = centerX + radius * (float)Math.cos(angle);
             float y = centerY + radius * (float)Math.sin(angle);
             createHexagon(x, y, letters.get(i));
         }
 
-        // Text boyutunu altıgen boyutuna göre ayarla
         textPaint.setTextSize(hexagonSize/1.8f);
         invalidate();
     }
